@@ -136,6 +136,12 @@ hardware.graphics = {
 
 services.mullvad-vpn.enable = true;
 
+# AI
+services.ollama = {
+  enable = true;
+  package = pkgs.ollama-cuda; # or pkgs.ollama-rocm for AMD, pkgs.ollama for CPU-only
+};
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
