@@ -1,3 +1,3 @@
 # nixos-configuration
 
-My configuratoin files for Nixos
+My configuration files for Nixos
