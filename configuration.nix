@@ -131,7 +131,8 @@ hardware.graphics = {
      vlc
      mullvad
      git
-  #  wget
+     wget
+     veracrypt
   ];
 
 services.mullvad-vpn.enable = true;
