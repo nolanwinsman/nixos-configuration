@@ -125,14 +125,24 @@ hardware.graphics = {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+     # Text Editors
+     vim 
+     emacs
+     # Gaming
      discord
      steam
-     vlc
+     # Security
      mullvad
-     git
-     wget
      veracrypt
+     # Media
+     vlc
+     # Programming
+     git
+     ripgrep
+     fd
+     # Tools
+     tree
+     wget
   ];
 
 services.mullvad-vpn.enable = true;
