@@ -128,6 +128,7 @@ hardware.graphics = {
      # Text Editors
      vim 
      emacs
+     neovim
      # Gaming
      discord
      steam
@@ -140,9 +141,13 @@ hardware.graphics = {
      git
      ripgrep
      fd
+     # Programming Languages
+     go
+     python3
      # Tools
      tree
      wget
+     glib
   ];
 
 services.mullvad-vpn.enable = true;
