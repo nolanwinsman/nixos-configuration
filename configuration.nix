@@ -144,6 +144,19 @@ hardware.graphics = {
      # Programming Languages
      go
      python3
+     # Language Servers
+     clang-tools
+     gopls
+     lua-language-server
+     pyright
+     # Linters
+     ruff
+     # Code Formatters
+     black
+     stylua
+     gofumpt
+     prettier
+     prettierd
      # Tools
      tree
      wget
