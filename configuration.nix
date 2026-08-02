@@ -1,41 +1,42 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, ... }:
-
 {
-# Blacklist nouveau, use proprietary driver
-services.xserver.videoDrivers = [ "nvidia" ];
+  config,
+  pkgs,
+  ...
+}: {
+  # Blacklist nouveau, use proprietary driver
+  services.xserver.videoDrivers = ["nvidia"];
 
-hardware.nvidia = {
-  # Modesetting is required for most modern setups (Wayland, PRIME, etc.)
-  modesetting.enable = true;
+  hardware.nvidia = {
+    # Modesetting is required for most modern setups (Wayland, PRIME, etc.)
+    modesetting.enable = true;
 
-  # Use the open-source kernel modules (only for Turing+ / RTX 20-series and newer).
-  # Set to false if you have a GTX 10-series or older.
-  open = false;
+    # Use the open-source kernel modules (only for Turing+ / RTX 20-series and newer).
+    # Set to false if you have a GTX 10-series or older.
+    open = false;
 
-  # Recommended for most desktop/laptop setups
-  powerManagement.enable = false;
+    # Recommended for most desktop/laptop setups
+    powerManagement.enable = false;
 
-  nvidiaSettings = true;
+    nvidiaSettings = true;
 
-  # Pin to the "stable" package set; use "beta" or "production" if you need something specific
-  package = config.boot.kernelPackages.nvidiaPackages.stable;
-};
+    # Pin to the "stable" package set; use "beta" or "production" if you need something specific
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+  };
 
-# Enable 32-bit graphics support — this is the part that fixes the
-# "some but not all architectures" warning you're seeing from Steam
-hardware.graphics = {
-  enable = true;
-  enable32Bit = true;
-};
+  # Enable 32-bit graphics support — this is the part that fixes the
+  # "some but not all architectures" warning you're seeing from Steam
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
 
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -109,10 +110,10 @@ hardware.graphics = {
   users.users."nw" = {
     isNormalUser = true;
     description = "nw";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = ["networkmanager" "wheel"];
     packages = with pkgs; [
       kdePackages.kate
-    #  thunderbird
+      #  thunderbird
     ];
   };
 
@@ -122,40 +123,40 @@ hardware.graphics = {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-     vim 
-     git
-     wget
-     smartmontools
-     nvme-cli
+    vim
+    git
+    wget
+    smartmontools
+    nvme-cli
   ];
 
-services.mullvad-vpn.enable = true;
+  services.mullvad-vpn.enable = true;
 
-services.ollama = {
-  enable = true;
-  package = pkgs.ollama-cuda;
-};
+  services.ollama = {
+    enable = true;
+    package = pkgs.ollama-cuda;
+  };
 
-# Firefox
-programs.firefox = {
-  enable = true;
-  policies = {
-    ExtensionSettings = {
-      "uBlock0@raymondhill.net" = {
-        install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
-        installation_mode = "force_installed";
-      };
-      "{446900e4-71c2-419f-a6a7-df9c091e268b}" = {
-        install_url = "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi";
-        installation_mode = "force_installed";
-      };
-      "sponsorBlock@ajay.app" = {
-        install_url = "https://addons.mozilla.org/firefox/downloads/latest/sponsorblock/latest.xpi";
-        installation_mode = "force_installed";
+  # Firefox
+  programs.firefox = {
+    enable = true;
+    policies = {
+      ExtensionSettings = {
+        "uBlock0@raymondhill.net" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
+          installation_mode = "force_installed";
+        };
+        "{446900e4-71c2-419f-a6a7-df9c091e268b}" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi";
+          installation_mode = "force_installed";
+        };
+        "sponsorBlock@ajay.app" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/sponsorblock/latest.xpi";
+          installation_mode = "force_installed";
+        };
       };
     };
   };
-};
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -183,5 +184,4 @@ programs.firefox = {
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "26.05"; # Did you read the comment?
-
 }
