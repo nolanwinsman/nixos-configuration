@@ -34,7 +34,7 @@ hardware.graphics = {
 
   imports =
     [ # Include the results of the hardware scan.
-      /etc/nixos/hardware-configuration.nix
+      ./hardware-configuration.nix
     ];
 
   # Bootloader.
@@ -116,59 +116,45 @@ hardware.graphics = {
     ];
   };
 
-  # Install firefox.
-  programs.firefox.enable = true;
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-     # Text Editors
      vim 
-     emacs
-     neovim
-     # Gaming
-     discord
-     steam
-     # Security
-     mullvad
-     veracrypt
-     # Media
-     vlc
-     # Programming
      git
-     ripgrep
-     fd
-     # Programming Languages
-     go
-     python3
-     # Language Servers
-     clang-tools
-     gopls
-     lua-language-server
-     pyright
-     # Linters
-     ruff
-     # Code Formatters
-     black
-     stylua
-     gofumpt
-     prettier
-     prettierd
-     # Tools
-     tree
      wget
-     glib
+     smartmontools
+     nvme-cli
   ];
 
 services.mullvad-vpn.enable = true;
 
-# AI
 services.ollama = {
   enable = true;
-  package = pkgs.ollama-cuda; # or pkgs.ollama-rocm for AMD, pkgs.ollama for CPU-only
+  package = pkgs.ollama-cuda;
+};
+
+# Firefox
+programs.firefox = {
+  enable = true;
+  policies = {
+    ExtensionSettings = {
+      "uBlock0@raymondhill.net" = {
+        install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
+        installation_mode = "force_installed";
+      };
+      "{446900e4-71c2-419f-a6a7-df9c091e268b}" = {
+        install_url = "https://addons.mozilla.org/firefox/downloads/latest/bitwarden-password-manager/latest.xpi";
+        installation_mode = "force_installed";
+      };
+      "sponsorBlock@ajay.app" = {
+        install_url = "https://addons.mozilla.org/firefox/downloads/latest/sponsorblock/latest.xpi";
+        installation_mode = "force_installed";
+      };
+    };
+  };
 };
 
   # Some programs need SUID wrappers, can be configured further or are
